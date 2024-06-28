@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +28,7 @@ import com.example.coffeemasters.ui.theme.Primary
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App() {
+fun App(dataManager: DataManager) {
     val selectedRoute = remember {
         mutableStateOf(Routes.MenuPage.route)
     }
@@ -39,9 +38,9 @@ fun App() {
         },
         content = {
             when (selectedRoute.value) {
-                Routes.MenuPage.route -> MenuPage()
+                Routes.MenuPage.route -> MenuPage(dataManager)
                 Routes.OffersPage.route -> OffersPage(Modifier.padding(it))
-                Routes.OrderPage.route -> OrderPage()
+                Routes.OrderPage.route -> OrderPage(dataManager)
                 Routes.InfoPage.route -> InfoPage()
             }
         },
@@ -64,13 +63,5 @@ fun AppTitle() {
             .background(Primary)
     ) {
         Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Coffee Masters Logo")
-    }
-}
-
-@Preview(showBackground = true, widthDp = 400)
-@Composable
-private fun App_Preview() {
-    CoffeeMastersTheme {
-        App()
     }
 }
