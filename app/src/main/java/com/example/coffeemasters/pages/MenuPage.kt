@@ -9,13 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.ListItemDefaults.contentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,10 +24,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.example.coffeemasters.DataManager
 import com.example.coffeemasters.Product
 import com.example.coffeemasters.R
 import com.example.coffeemasters.ui.theme.Alternative1
 import com.example.coffeemasters.ui.theme.CardBackground
+import com.example.coffeemasters.ui.theme.Primary
 
 fun Double.format(digits: Int) = "%.${digits}f".format(this)
 
@@ -40,8 +42,8 @@ fun ProductItem(product: Product, onAdd: (Product)->Unit) {
             .background(Color.White)
     ) {
 
-        Image(
-            painter = painterResource(id = R.drawable.black_coffee),
+        AsyncImage(
+            model = product.imageUrl,
             contentDescription = "Image for ${product.name}",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -74,21 +76,27 @@ fun ProductItem(product: Product, onAdd: (Product)->Unit) {
     }
 }
 
-@Preview
 @Composable
-fun MenuPage() {
+fun MenuPage(dataManager: DataManager) {
     LazyColumn {
-        items(5) {
-            Card(
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 2.dp
-                ),
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .background(CardBackground)
-                    .padding(12.dp)
-            ) {
-                ProductItem(product = Product(1, "Dummy", 1.25, ""), onAdd = {})
+        items(dataManager.menu) {
+            Text(text = it.name,
+                color = Primary,
+                modifier = Modifier.padding(10.dp, 20.dp, 10.dp, 10.dp))
+            it.products.forEach {
+                Card(
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 2.dp
+                    ),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .background(CardBackground)
+                        .padding(12.dp)
+                ) {
+                    ProductItem(product = it, onAdd = {
+                        dataManager.cartAdd(it)
+                    })
+                }
             }
         }
     }
