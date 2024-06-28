@@ -16,13 +16,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeemasters.pages.InfoPage
 import com.example.coffeemasters.pages.MenuPage
 import com.example.coffeemasters.pages.OffersPage
 import com.example.coffeemasters.pages.OrderPage
-import com.example.coffeemasters.ui.theme.CoffeeMastersTheme
 import com.example.coffeemasters.ui.theme.Primary
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -38,10 +36,10 @@ fun App(dataManager: DataManager) {
         },
         content = {
             when (selectedRoute.value) {
-                Routes.MenuPage.route -> MenuPage(dataManager)
+                Routes.MenuPage.route -> MenuPage(dataManager, Modifier.padding(it))
                 Routes.OffersPage.route -> OffersPage(Modifier.padding(it))
-                Routes.OrderPage.route -> OrderPage(dataManager)
-                Routes.InfoPage.route -> InfoPage()
+                Routes.OrderPage.route -> OrderPage(dataManager, Modifier.padding(it))
+                Routes.InfoPage.route -> InfoPage(Modifier.padding(it))
             }
         },
         bottomBar = {

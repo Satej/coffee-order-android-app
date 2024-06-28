@@ -1,6 +1,5 @@
 package com.example.coffeemasters.pages
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,14 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.coffeemasters.DataManager
 import com.example.coffeemasters.Product
-import com.example.coffeemasters.R
 import com.example.coffeemasters.ui.theme.Alternative1
 import com.example.coffeemasters.ui.theme.CardBackground
 import com.example.coffeemasters.ui.theme.Primary
@@ -77,8 +73,10 @@ fun ProductItem(product: Product, onAdd: (Product)->Unit) {
 }
 
 @Composable
-fun MenuPage(dataManager: DataManager) {
-    LazyColumn {
+fun MenuPage(dataManager: DataManager, modifier: Modifier = Modifier) {
+    LazyColumn (
+        modifier = modifier
+    ) {
         items(dataManager.menu) {
             Text(text = it.name,
                 color = Primary,
