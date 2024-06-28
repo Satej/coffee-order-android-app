@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeemasters.ui.theme.Alternative2
+import com.example.coffeemasters.pages.InfoPage
+import com.example.coffeemasters.pages.MenuPage
+import com.example.coffeemasters.pages.OffersPage
+import com.example.coffeemasters.pages.OrderPage
 import com.example.coffeemasters.ui.theme.CoffeeMastersTheme
 import com.example.coffeemasters.ui.theme.Primary
-import com.example.coffeemasters.ui.theme.Purple40
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,17 +37,21 @@ fun App() {
         topBar = {
             TopAppBar(title = { AppTitle() })
         },
+        content = {
+            when (selectedRoute.value) {
+                Routes.MenuPage.route -> MenuPage()
+                Routes.OffersPage.route -> OffersPage(Modifier.padding(it))
+                Routes.OrderPage.route -> OrderPage()
+                Routes.InfoPage.route -> InfoPage()
+            }
+        },
         bottomBar = {
             NavBar(
                 selectedRoute = selectedRoute.value,
                 onChange = { selectedRoute.value = it }
             )
         }
-    ) { innerPadding ->
-        OffersPage(
-            Modifier.padding(innerPadding)
-        )
-    }
+    )
 }
 
 @Composable
