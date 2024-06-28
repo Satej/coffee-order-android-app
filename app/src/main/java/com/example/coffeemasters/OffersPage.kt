@@ -63,11 +63,12 @@ private fun Offer_Preview() {
 
 @Composable
 @Preview(showBackground = true, widthDp = 400)
-fun OffersPage() {
-    Column(modifier = Modifier
+fun OffersPage(modifier: Modifier = Modifier) {
+    Column(modifier = modifier
         .verticalScroll(rememberScrollState())
     ) {
         Offer(title = "Early Coffe", description = "10% off. Offer valid from 6am to 9am.")
+        Offer(title = "Welcome Gift", description = "25% off on your first order.")
         Offer(title = "Welcome Gift", description = "25% off on your first order.")
     }
 }
